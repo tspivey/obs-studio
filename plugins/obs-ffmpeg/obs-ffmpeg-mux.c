@@ -185,7 +185,11 @@ static void build_command_line(struct ffmpeg_muxer *stream, struct dstr *cmd)
 		add_video_encoder_params(stream, cmd, vencoder);
 
 	if (num_tracks) {
-		dstr_cat(cmd, "aac ");
+		obs_data_t *settings = obs_encoder_get_settings(aencoders[0]);
+		const char *encoder_name = obs_data_get_string(settings, "encoder");
+		dstr_cat(cmd, encoder_name);
+		obs_data_release(settings);
+		dstr_cat_ch(cmd, ' ');
 
 		for (int i = 0; i < num_tracks; i++) {
 			add_audio_encoder_params(cmd, aencoders[i]);
