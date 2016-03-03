@@ -385,7 +385,7 @@ static obs_properties_t *ffmpeg_mux_properties(void *unused)
 
 struct obs_output_info ffmpeg_muxer = {
 	.id             = "ffmpeg_muxer",
-	.flags          = OBS_OUTPUT_AV |
+	.flags          = OBS_OUTPUT_AUDIO |
 	                  OBS_OUTPUT_ENCODED |
 	                  OBS_OUTPUT_MULTI_TRACK,
 	.get_name       = ffmpeg_mux_getname,
