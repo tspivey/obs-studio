@@ -338,7 +338,7 @@ static bool send_headers(struct ffmpeg_muxer *stream)
 	obs_encoder_t *aencoder;
 	size_t idx = 0;
 
-	if (!send_video_headers(stream))
+	if (obs_output_get_video_encoder(stream->output) != NULL && !send_video_headers(stream))
 		return false;
 
 	do {
