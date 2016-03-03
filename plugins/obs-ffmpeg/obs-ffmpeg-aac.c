@@ -125,13 +125,14 @@ static void *aac_create(obs_data_t *settings, obs_encoder_t *encoder)
 {
 	struct aac_encoder *enc;
 	int                bitrate = (int)obs_data_get_int(settings, "bitrate");
+	const char *encoder_name = obs_data_get_string(settings, "encoder");
 	audio_t            *audio   = obs_encoder_audio(encoder);
 
 	avcodec_register_all();
 
 	enc          = bzalloc(sizeof(struct aac_encoder));
 	enc->encoder = encoder;
-	enc->aac     = avcodec_find_encoder(AV_CODEC_ID_AAC);
+	enc->aac     = avcodec_find_encoder_by_name(encoder_name);
 
 	blog(LOG_INFO, "---------------------------------");
 
@@ -250,6 +251,7 @@ static bool aac_encode(void *data, struct encoder_frame *frame,
 static void aac_defaults(obs_data_t *settings)
 {
 	obs_data_set_default_int(settings, "bitrate", 128);
+	obs_data_set_default_string(settings, "encoder", "aac");
 }
 
 static obs_properties_t *aac_properties(void *unused)
